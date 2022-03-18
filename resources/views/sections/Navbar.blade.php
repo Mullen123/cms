@@ -23,7 +23,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link"   href="{{url('/datos')}}" role="button" style="color: #7FB0DA;">
+        <a class="nav-link"   href="#" role="button" style="color: #7FB0DA;">
           Bienvenido: {{auth()->user()->name}}
         </a>
         

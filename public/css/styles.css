@@ -5,3 +5,22 @@
 	color: red !important;
 	font-weight: 900 !important;
 }
+
+
+.main-sidebar{
+
+background: #1F2667 !important;
+	/*background:  linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(14,9,121,1) 35%, rgba(0,212,255,1) 100%) !important;*/
+} 
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: rgba(35,199,232,0.69) !important ;
+    border: none !important;
+
+-webkit-box-shadow: 0px 0px 2px 2px rgba(35,199,232,0.69) !important;
+-moz-box-shadow: 0px 0px 2px 2px rgba(35,199,232,0.69) !important;
+box-shadow: 0px 0px 2px 2px rgba(35,199,232,0.69) !important;
+  /*change the hover text color*/
+}
+
+  

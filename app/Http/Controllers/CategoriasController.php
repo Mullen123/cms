@@ -7,109 +7,169 @@ use App\Models\Categorias;
 use Illuminate\Support\Facades\DB;
 
 
+use DataTables;
 use Validator;
 
-class CategoriasController extends Controller
+
+
+
+class CategoriasController extends   Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+
+
+    
+
+    public function index(Request $request)
     {
 
+        if($request->ajax()){
 
 
-        /*obtenemos todos los registros almacenados en la base de datos*/
-        $categorias = Categorias::all();
-         //dd($categorias);
-        return view('modulos.categories',compact('categorias'));
+            /*obtencion de los datos que se quieren mostrar en la base de datos*/
+
+            $categorias =  Categorias::select('id','name')->get();
+
+            return Datatables::of($categorias)
+            ->addColumn('action', function($row){
+              return '<div class="btn-group" >
+
+
+              <a type="button" class="btn-floating light-blue waves-effect waves-light" id="editUserBtn" data-id="'.$row['id'].'">
+
+              <i class="fas fa-pencil-alt" style="color:#00c851;"></i></a>&nbsp;&nbsp;
+
+
+
+              <a type="button" class="btn-floating light-blue waves-effect waves-light"  id="deleteUserBtn"  data-id="'.$row['id'].'"><i class="fa fa-trash" style="color:#ff3547;"></i></a>
+
+              </div>';
+
+          })
+            ->rawColumns(['action'])
+            ->make(true);
+
+
+        }
+
+        return view('modulos.categorias.categories');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
 
-            $category = $request->all();
-        Categorias::create($category);        
+     if($request->ajax()){
+
+
+        try {
+
+
+         $category = $request->all();
+
+
+
+         $resultado =DB::table('categorias')->where('name', $category)->exists();
+
+         if($resultado){
+
+          return response()->json(['status'=>2,'error'=>'Categoria  repetida']);
+
+      }else{
+
+        Categorias::create($category); 
         return response()->json(['status'=>1,'success'=>'Category saved successfully.']);
-        /*validaciones*/
-        /*$validator = Validator::make($request->all(),[
-            'name' => 'required|unique:categorias|max:2',
-            
-        ]);
-        if (!$validator->passes()) {
-             return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
-        }
+    }
 
-        $category = $request->all();
-        Categorias::create($category);        
-        return response()->json(['status'=>1,'success'=>'Category saved successfully.']);*/
+} catch (Exception $e) {
+ return response()->json(['status'=>0,'error'=>'Error']);
+}
+
+
+}
+
+
+}
+
+
+
+public function edit(Request $request)
+{
+
+    $id = $request->id;
+    $categoriaDetails = Categorias::find($id);
+    return response()->json(['details'=>$categoriaDetails]);
+
+
+}
+
+
+
+public function update(Request $request){
+
+
+
+
+
+   $category_id = $request->cid;
+
+   $category = Categorias::find($category_id);
+   $category->name= $request->name2;
+
+   $resultado =DB::table('categorias')->where('name', $category->name)->exists();       
+   if($resultado){
+     return response()->json(['code'=>2, 'msg'=>'Country Details have Been updated']); 
+ }else{
+    $query = $category->save();
+
+    if($query){
+        return response()->json(['code'=>1, 'msg'=>'Country Details have Been updated']);  
     }
 
 
 
 
+    
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Categorias  $categorias
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Categorias $categorias)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Categorias  $categorias
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Categorias $categorias)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Categorias  $categorias
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Categorias $categorias)
-    {
-        //
-    }
+}        
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Categorias  $categorias
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Categorias $categorias)
-    {
-        //
-    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+public function delete(Request $request)
+{
+
+    if($request->ajax()){
+      $category_id = $request->id;
+      try {
+
+
+       $query = Categorias::find($category_id)->delete(); 
+       return response()->json(['code'=>1,'success'=>'Deleted successfully.']);
+
+   } catch (Exception $e) {
+      return response()->json(['code'=>0,'error'=>'No se pudo borrar el elemento.']);
+  }
+
+
+}
+
+
+}
+
+
 }

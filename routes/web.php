@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UsersController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,17 +24,44 @@ Auth::routes();
 
 
 
-
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 /*ruta para el front end*/
 Route::get('/', [FrontendController::class, 'index']);
 
- 
-Route::get('/inicio', [InicioController::class, 'index']);
 
 
-/*rutas para categorias*/
-Route::get('/categories', [CategoriasController::class, 'index'])->name('categorias.index');
-Route::post('/categories', [CategoriasController::class, 'store'])->name('categorias.store');
+
+
+
+/*si no estas logueado entonces  te envia al login*/
+Route::group(['middleware' => ['auth']], function () {
+
+
+	Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
+
+
+
+	Route::resource('users',UsersController::class)->names('users');
+		Route::resource('roles',RoleController::class)->names('roles');
+
+
+
+
+
+
+
+
+
+
+
+	/*rutas para las categorias*/
+	Route::get('/categories', [CategoriasController::class, 'index'])->middleware('can:categorias.home')->name('categorias.home');
+	Route::post('/categories', [CategoriasController::class, 'store'])->middleware('can:categorias.store')->name('categorias.store');
+	Route::post('/editCategory', [CategoriasController::class, 'edit'])->middleware('can:categorias.edit')->name('categorias.edit');
+	Route::post('/updateCategory', [CategoriasController::class, 'update'])->middleware('can:categorias.update')->name('categorias.update');
+	Route::post('/deleteCategory',[CategoriasController::class,'delete'])->middleware('can:categorias.delete')->name('categorias.delete');
+
+});
+
+
+
+
