@@ -36,20 +36,12 @@ Route::get('/', [FrontendController::class, 'index']);
 Route::group(['middleware' => ['auth']], function () {
 
 
-	Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
+	 Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 
 
 
 	Route::resource('users',UsersController::class)->names('users');
-		Route::resource('roles',RoleController::class)->names('roles');
-
-
-
-
-
-
-
-
+	Route::resource('roles',RoleController::class)->names('roles')->except('show');
 
 
 

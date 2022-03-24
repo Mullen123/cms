@@ -9,9 +9,30 @@
 
 .main-sidebar{
 
-background: #1F2667 !important;
+background:#E8F8F5   !important;
 	/*background:  linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(14,9,121,1) 35%, rgba(0,212,255,1) 100%) !important;*/
 } 
+
+
+.main-sidebar .nav-link{
+
+color:  #7FB0DA !important;
+} 
+
+
+
+
+
+.main-sidebar .nav-link:hover
+{
+
+background-color: #F8F9F9  !important;
+  color:  #337ab7 !important ;
+
+
+
+} 
+
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
   background: rgba(35,199,232,0.69) !important ;
