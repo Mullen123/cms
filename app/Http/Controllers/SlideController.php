@@ -108,7 +108,9 @@ public function store(Request $request)
      public function edit(Request $request)
         {
            
-
+            $id = $request->id;
+    $slideDetails = Slide::find($id);
+    return response()->json(['details'=>$slideDetails]);
         
         }
 

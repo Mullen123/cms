@@ -54,9 +54,13 @@
  	},
  });
 });/*termina document ready*/
+
+
 	/*agrregar categoria*/
 	$(document).on('click','#btnAddUser', function(e){
 		e.preventDefault();
+
+		//console.log('le diste');
 		if(validate.form()){
         //obtener los valores de los inputs
         var name = $('#name').val();
@@ -68,7 +72,7 @@
          	dataType:'json',
          	success: function(data){
          		if(data.status == 2){
-         			$("#UserModal").modal('hide');  
+         			$("#exampleModal").modal('hide');  
          			$('body').removeClass('modal-open');
          			$(".modal-backdrop").remove();
          			document.getElementById("formCategorias").reset();
@@ -81,7 +85,7 @@
          		}
          		if(data.status== 1){
               //ocultamos el modal
-              $("#UserModal").modal('hide');  
+              $("#exampleModal").modal('hide');  
               $('body').removeClass('modal-open');
               $(".modal-backdrop").remove();
               document.getElementById("formCategorias").reset();
@@ -101,6 +105,9 @@
         });//termina peticion ajax
        }
      });
+
+
+
 	
 	/*metodo para eliminar categorias*/
 	$(document).on('click','#deleteUserBtn', function(e){
@@ -237,7 +244,7 @@
 		},
 	});
 	/*reseteo de modal*/
-	$('#UserModal').on('shown.bs.modal', function (event) {
+	$('#exampleModal').on('shown.bs.modal', function (event) {
 		validate.resetForm();
 		document.getElementById("formCategorias").reset();
 	})

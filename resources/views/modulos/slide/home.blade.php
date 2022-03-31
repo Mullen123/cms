@@ -48,9 +48,10 @@
 							</button>-->
 
 							<div class="card-tools">
-								<button type="button" class="btn btn-light" data-toggle="modal" data-target="#SlideModal">
-									Agregar
-								</button>
+								<button type="button"  class="btn btn-light" data-toggle="modal" data-target="#exampleModal1">
+  Agregar
+</button>
+
 							</div>
 
 
@@ -204,7 +205,7 @@
 				processData:false,
 				success: function(data){
 					if(data.status == 2){
-						$("#SlideModal").modal('hide');  
+						$("#exampleModal1").modal('hide');  
 						$('body').removeClass('modal-open');
 						$(".modal-backdrop").remove();
 						document.getElementById("formSlide").reset();
@@ -218,7 +219,7 @@
 					}
 					if(data.status ==1){
 
-						$("#SlideModal").modal('hide');  
+						$("#exampleModal1").modal('hide');  
 						$('body').removeClass('modal-open');
 						$(".modal-backdrop").remove();
 						document.getElementById("formSlide").reset();
@@ -295,10 +296,7 @@
 
       }
 
-  }
-
-
-  );
+  });
 
 
 
@@ -307,6 +305,24 @@
 
 
 	});/*termina el metodo de borrado */
+
+
+
+$(document).on('click','#editSlideBtn',function(){
+		
+		var id_slide = $(this).data('id');
+					//e.preventDefault();
+					
+					//console.log(id);
+			
+					$.post('<?= route("edit") ?>',{id:slide_id}, function(data){
+                         console.log(data.details.id);
+                         
+                       },'json');
+				});
+
+
+
 
 
 	/*validacion del formulario*/
@@ -366,7 +382,7 @@
 	});
 
 	/*reseteo de modal*/
-	$('#SlideModal').on('shown.bs.modal', function (event) {
+	$('#exampleModal1').on('shown.bs.modal', function (event) {
 		validate.resetForm();
 		document.getElementById("formSlide").reset();
 

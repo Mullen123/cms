@@ -46,14 +46,17 @@
 								Pdf
 							</button>-->
 
-							@can('categorias.store')
+							
 							<div class="card-tools">
-								<button type="button" class="btn btn-light" data-toggle="modal" data-target="#UserModal">
+								
+
+
+								<button type="button" class="btn btn-light"  data-toggle="modal" data-target="#exampleModal">
 									Agregar
 								</button>
 							</div>
 
-							@endcan
+							
 
 						</div>
 						<!-- /.card-header -->
