@@ -89,7 +89,7 @@
   
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="http://project-cms.test/dist/js/pages/dashboard.js"></script>
-  <script type="text/javascript" src="http://project-cms.test/js/jquery.validate.js"></script>
+ <script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.validate.js"></script>
 
 
   @yield('scripts')

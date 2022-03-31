@@ -1,20 +1,21 @@
-<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.validate.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/additional-methods.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/popper.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/bootstrap-4.3.1.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/dataTables.bootstrap4.min.js"></script>
+
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/sweetalert2@11.js"></script>
+
+
 <script>
-
 	$( document ).ready(function() {
-
 		$.ajaxSetup({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
 		});
-
  //metodo para mostrar usuarios
  $('#usuarios').DataTable({
  	"processing": true,
@@ -22,9 +23,7 @@
  	"ajax": {
  		url: "{{ route('categorias.home') }}"
  	},
-
  	"columns": [
-
  	{data:'id'},
  	{data:'name'},
  	{
@@ -53,27 +52,15 @@
  			"previous": "Anterior"
  		}
  	},
-
  });
-
-
-
 });/*termina document ready*/
-
-
-
 	/*agrregar categoria*/
 	$(document).on('click','#btnAddUser', function(e){
-
 		e.preventDefault();
-
 		if(validate.form()){
-
-
         //obtener los valores de los inputs
         var name = $('#name').val();
          //console.log(name);
-
          $.ajax({
          	type:'POST',
          	url: "{{route('categorias.store')}}",
@@ -91,10 +78,8 @@
          				title: 'Oops...',
          				text: 'Categoría existente ingrese otra opcion!', 
          			})
-
          		}
          		if(data.status== 1){
-
               //ocultamos el modal
               $("#UserModal").modal('hide');  
               $('body').removeClass('modal-open');
@@ -104,7 +89,6 @@
               //$('#usuarios').DataTable().ajax.reload(null, false);
               $('#usuarios').DataTable().ajax.reload(null, false);
                 //muestras la alerta de registro exitoso
-
                 Swal.fire({
                 	icon: 'success',
                 	confirmButtonColor:'rgb(3, 169, 244)',
@@ -113,27 +97,14 @@
               }
               if(data.status ==0)
               	console.log('error');
-
             }
-
         });//termina peticion ajax
-
-
        }
-
-
-
      });
-
-
 	
-
 	/*metodo para eliminar categorias*/
-
-
 	$(document).on('click','#deleteUserBtn', function(e){
 		var id = $(this).data('id');
-
 		swal.fire({
 			icon:'question',
 			title:'Estas Seguro?',
@@ -150,10 +121,8 @@
 		}).then((result) => {
         //si el ese wey dice que si lo borra
         if (result.value) {
-
           // entonces hacemos una peticion ajax
           $.ajax({
-
           	type:'POST',
           	url: "{{route('categorias.delete')}}",
           	data: {id:id},
@@ -170,48 +139,26 @@
           				console.log('error');
           			}
           		}
-
          });//fin de la peticion ajax
-
         }//fin del if donde se valida si el usuario presiona el boton de eliminar o cancelar
-
      });//finaliza la promesa
-
-
-
 	});
-
-
 	$(document).on('click','#editUserBtn',function(){
-
 		
 		var id = $(this).data('id');
 					//e.preventDefault();
 					
 					//console.log(id);
 					
-
 					$.post('<?= route("categorias.edit") ?>',{id:id}, function(data){
                          //alert(data.details.id);
-
                          $('#EditModal').find('input[name="cid"]').val(data.details.id);
                          $('#EditModal').find('input[name="name2"]').val(data.details.name);
-
-
                          $("#EditModal").modal('show');  
-
                        },'json');
-
-
 				});
-
-
-
-
 	$('#formEditCategorias').on('submit', function(e){
 		e.preventDefault();
-
-
 		if(validate2.form()){
 			var form = this;
 			$.ajax({
@@ -221,13 +168,11 @@
 				processData:false,
 				dataType:'json',
 				contentType:false,
-
 				success: function(data){
 					if(data.code == 1){
 						$("#EditModal").modal('hide');  
 						$('body').removeClass('modal-open');
 						$(".modal-backdrop").remove();
-
 						$('#usuarios').DataTable().ajax.reload(null, false);
 						Swal.fire({
 							icon: 'success',
@@ -248,85 +193,53 @@
 					}
 				}
 			});
-
 		}
-
 	});
-
-
 	/*validacion del formulario*/
-
 	let validate = $('#formCategorias').validate({
-
 		rules:{
-
 			name:{
 				required:true,
 				maxlength: 100
 			}
-
 		},
 		highlight: function (element, errorClass, validClass) {
 			$(element).addClass('is-invalid')
-
 		},
 		unhighlight: function (element, errorClass, validClass) {
 			$(element).removeClass('is-invalid')
 		},
-
 		messages:{
 			name: {
 				required: "Campo requerido",
 				maxlength: "Máximo 100 caracteres"
-
 			}
-
 		},
-
 	});
-
-
-
 	let validate2 = $('#formEditCategorias').validate({
-
 		rules:{
-
 			name2:{
 				required:true,
 				maxlength: 100
 			}
-
 		},
 		highlight: function (element, errorClass, validClass) {
 			$(element).addClass('is-invalid')
-
 		},
 		unhighlight: function (element, errorClass, validClass) {
 			$(element).removeClass('is-invalid')
 		},
-
 		messages:{
 			name2: {
 				required: "Campo requerido",
 				maxlength: "Máximo 100 caracteres"
-
 			}
-
 		},
-
 	});
-
-
 	/*reseteo de modal*/
 	$('#UserModal').on('shown.bs.modal', function (event) {
 		validate.resetForm();
 		document.getElementById("formCategorias").reset();
-
 	})
-
-
 </script>
-
-
-
 

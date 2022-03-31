@@ -8,33 +8,22 @@
 
                 <ul>
 
+     @foreach($slides as $slide)
                     <li>
-                        <img src="images/slide/slide01.jpg">
+
+
+                        <img src="storage/{{$slide->image}}">
+
+
                         <div class="slideCaption">
-                            <h3>Título 1</h3>
-                            <p>Descripción 1</p>
+                            <h3>{{$slide->title}}</h3>
+                            <p>{{$slide->description}}</p>
                         </div>
                     </li>
 
 
-                    <li>
-                        <img src="images/slide/slide02.jpg">
-                        <div class="slideCaption">
-                            <h3>Título 2</h3>
-                            <p>Descripción 2</p>
-                        </div>
-                    </li>
-
-
-                    <li>
-                        <img src="images/slide/slide03.jpg">
-                        <div class="slideCaption">
-                            <h3>Título 3</h3>
-                            <p>Descripción 3</p>
-                        </div>
-                    </li>
-                    
-
+                  
+@endforeach
 
                 </ul>
 

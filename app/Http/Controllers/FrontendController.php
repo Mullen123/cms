@@ -6,6 +6,7 @@ use App\Models\Frontend;
 use Illuminate\Http\Request;
 
 use App\Models\Categorias;
+use App\Models\Slide;
 
 class FrontendController extends Controller
 {
@@ -17,11 +18,12 @@ class FrontendController extends Controller
     public function index()
     {
 
-
+        
+          $slides = Slide::all();
 
         $categorias = Categorias::all();
     
-        return view('front-end.home',compact('categorias'));
+        return view('front-end.home',compact('categorias','slides'));
     }
 
     /**

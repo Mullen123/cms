@@ -6,7 +6,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\SlideController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,12 +36,21 @@ Route::get('/', [FrontendController::class, 'index']);
 Route::group(['middleware' => ['auth']], function () {
 
 
-	 Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
+	Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 
 
 
 	Route::resource('users',UsersController::class)->names('users');
 	Route::resource('roles',RoleController::class)->names('roles')->except('show');
+
+
+
+	/*rutas para el modulo Slide*/
+	Route::get('/slide', [SlideController::class, 'index'])->name('slide.home');
+	Route::post('/slide', [SlideController::class, 'store'])->name('slide.store');
+    
+	Route::post('/deleteSlide',[SlideController::class,'destroy'])->name('slide.delete');
+
 
 
 
@@ -53,6 +62,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/deleteCategory',[CategoriasController::class,'delete'])->middleware('can:categorias.delete')->name('categorias.delete');
 
 });
+
 
 
 
