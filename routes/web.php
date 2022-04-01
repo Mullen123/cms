@@ -47,9 +47,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 	/*rutas para el modulo Slide*/
 	Route::get('/slide', [SlideController::class, 'index'])->name('slide.home');
-	Route::post('/slide', [SlideController::class, 'store'])->name('slide.store');
-       
+	Route::post('/slide', [SlideController::class, 'store'])->name('slide.store');   
 	Route::post('/editSlide',[SlideController::class,'edit'])->name('edit');
+	Route::post('/updateSlide',[SlideController::class,'update'])->name('slide.update');
 	Route::post('/deleteSlide',[SlideController::class,'destroy'])->name('slide.delete');
 
 

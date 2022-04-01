@@ -11,6 +11,8 @@ class Categorias extends Model
 
     protected $table = "categorias";
     
+
+    /*aqui vas a poner todos los campos de tu tabla*/
      protected $fillable = [
         'name'
     ];

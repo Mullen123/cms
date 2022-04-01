@@ -51,8 +51,6 @@ public function store(Request $request)
 {
 
 
-
-
   try {
 
 
@@ -64,7 +62,7 @@ public function store(Request $request)
 
    if($resultado){
 
-    return response()->json(['status'=>2,'error'=>'Categoria  repetida']);
+    return response()->json(['status'=>2,'error'=>'Slide  repetida']);
 
   }else{
 
@@ -101,45 +99,83 @@ public function store(Request $request)
 
 
 
-        }
+}
 
 
 
-     public function edit(Request $request)
-        {
-           
-            $id = $request->id;
-    $slideDetails = Slide::find($id);
-    return response()->json(['details'=>$slideDetails]);
-        
-        }
+public function edit(Request $request)
+{
+
+  $id = $request->id;
+  $slideDetails = Slide::find($id);
+  return response()->json(['details'=>$slideDetails]);
+
+}
 
 
-        public function update(Request $request, Slide $slide)
-        {
+public function update(Request $request)
 
-        }
-
-
-        public function destroy( Request $request)
-        {
-
-          if($request->ajax()){
-
-            $slide_id = $request->id;
-            $slide = Slide::find($slide_id);
-            
-            if(Storage::delete('public/'.$slide->image))
-
-              Slide::destroy($slide_id);
-          }
-          return response()->json(['code'=>1,'success'=>'Deleted successfully.']);    
-
-        }
+{
 
 
 
+  try {
+
+  $slide = new Slide();
+  $slide_id = $request->slid;
+  $slide = Slide::find($slide_id);
+
+  $slide->title= $request->title2;
+  $slide->description= $request->description2;
+
+  $resultado =DB::table('slide')->where('title',$slide->title)->exists();       
+  if($resultado){
+   return response()->json(['status'=>2, 'msg'=>'slide existente']); 
+ }
+ else{
+   if($request->hasFile('image2')){
+
+
+    Storage::delete('public/'.$slide->image);
+
+    $rutaImg = $request['image2']->store('slide','public');
+
+    $slide->image= $rutaImg;
+
+    $slide->save(); 
+
+  }
+
+  return response()->json(['status'=>1, 'msg'=>'Slide actulaizado con exito']); 
+
+}
+
+}catch (Exception $e) {
+ return response()->json(['status'=>0,'error'=>'Error']);
+}
+
+}
+
+
+public function destroy( Request $request)
+{
+
+  if($request->ajax()){
+
+    $slide_id = $request->id;
+    $slide = Slide::find($slide_id);
+
+    if(Storage::delete('public/'.$slide->image))
+
+      Slide::destroy($slide_id);
+  }
+  return response()->json(['code'=>1,'success'=>'Deleted successfully.']);    
+
+}
 
 
 
-      }
+
+
+
+}

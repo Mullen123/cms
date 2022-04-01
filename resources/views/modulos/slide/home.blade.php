@@ -49,8 +49,8 @@
 
 							<div class="card-tools">
 								<button type="button"  class="btn btn-light" data-toggle="modal" data-target="#exampleModal1">
-  Agregar
-</button>
+									Agregar
+								</button>
 
 							</div>
 
@@ -97,6 +97,8 @@
 
 
 @include('modulos.slide.create-slide')
+
+@include('modulos.slide.slide-edit')
 @endsection
 
 @section('scripts')
@@ -126,75 +128,76 @@
 			}
 		});
 
- //metodo para mostrar usuarios
- $('#slide').DataTable({
- 	"processing": true,
- 	"serverSide": true,
- 	"ajax": {
- 		url: "{{ route('slide.home') }}"
- 	},
-
- 	"columns": [
-
- 	{data:'id'},
- 	{data:'title'},
- 	{data:'description'},
- 	{data:'image',
-
-
- 	render: function( data, type, full, meta ) {
- 		return "<img src=\"/storage/" + data + "\" height=\"50\"/>";
-
-
- 	}
-
-
- },
- {
- 	data: 'action', 
- 	name: 'action', 
- 	orderable: true, 
- 	searchable: true
- },
- ],    language: {
- 	"decimal": "",
- 	"emptyTable": "No hay información",
- 	"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
- 	"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
- 	"infoFiltered": "(Filtrado de _MAX_ total entradas)",
- 	"infoPostFix": "",
- 	"thousands": ",",
- 	"lengthMenu": "Mostrar _MENU_ Entradas",
- 	"loadingRecords": "Cargando...",
- 	"processing": "Procesando...",
- 	"search": "Buscar:",
- 	"zeroRecords": "Sin resultados encontrados",
- 	"paginate": {
- 		"first": "Primero",
- 		"last": "Ultimo",
- 		"next": "Siguiente",
- 		"previous": "Anterior"
- 	}
- },
-
-});
 
 
 
-});/*termina document ready*/
+		/*----------------------------------- Datatable ---------------------------------- */
+
+		$('#slide').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"ajax": {
+				url: "{{ route('slide.home') }}"
+			},
+
+			"columns": [
+
+			{data:'id'},
+			{data:'title'},
+			{data:'description'},
+			{data:'image',
 
 
+			render: function( data, type, full, meta ) {
+				return "<img src=\"/storage/" + data + "\" height=\"50\"/>";
+			}
+		},
+		{
+			data: 'action', 
+			name: 'action', 
+			orderable: true, 
+			searchable: true
+		},
+		],    language: {
+			"decimal": "",
+			"emptyTable": "No hay información",
+			"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+			"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+			"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+			"infoPostFix": "",
+			"thousands": ",",
+			"lengthMenu": "Mostrar _MENU_ Entradas",
+			"loadingRecords": "Cargando...",
+			"processing": "Procesando...",
+			"search": "Buscar:",
+			"zeroRecords": "Sin resultados encontrados",
+			"paginate": {
+				"first": "Primero",
+				"last": "Ultimo",
+				"next": "Siguiente",
+				"previous": "Anterior"
+			}
+		},
+
+	});
+
+		/*-------------------------------------------------------------------------------- */
+
+	});/*termina document ready*/
 
 
 
 
+
+
+	/*----------------------------- Metodo para agregar Slide ------------------------ */
+	
 	$(document).on('submit','#formSlide', function(e){
 
 		e.preventDefault();
 
 		if(validate.form()){
 			let formData = new FormData($('#formSlide')[0]); 
-
 
 			$.ajax({
 
@@ -233,26 +236,108 @@
 					}
 					if(data.status ==0)
 						console.log('error');
-
-
 				}
 
          });//fin de la peticion ajax
 
-
-
 		}
-
-
 
 	});
 
+	/*-------------------------------------------------------------------------------- */
 
+
+
+
+	/*----------------------------- Metodo para Editar Slide ------------------------ */
+
+
+	$(document).on('click','#editSlideBtn',function(){
+
+		var slide_id = $(this).data('id');
+
+		$.post('<?= route("edit") ?>',{id:slide_id}, function(data){
+                         //console.log(data.details.title);
+                         $('#exampleModal3').find('input[name="slid"]').val(data.details.id);
+                         $('#exampleModal3').find('input[name="title2"]').val(data.details.title);
+                         $('#exampleModal3').find('input[name="description2"]').val(data.details.description);
+                         $("#exampleModal3").modal('show');  
+                     },'json');
+	});
+
+	/*-------------------------------------------------------------------------------- */
+
+
+
+
+	/*----------------------------- Metodo para actualizar Slide ------------------------ */
+
+	$('#exampleModal3').on('submit', function(e){
+		e.preventDefault();
+
+		if(validate2.form()){
+
+			let formDataSlide = new FormData($('#Edtslide')[0]);
+
+			$.ajax({
+
+				type:'POST',
+				url: "{{route('slide.update')}}",
+				data: formDataSlide,
+				contentType:false,
+				processData:false,
+				success: function(data){
+
+					if(data.status == 2){
+						$("#exampleModal3").modal('hide');  
+						$('body').removeClass('modal-open');
+						$(".modal-backdrop").remove();
+						document.getElementById("Edtslide").reset();
+						Swal.fire({
+							icon: 'error',
+							confirmButtonColor:'rgb(3, 169, 244)',
+							title: 'Oops...',
+							text: 'Slide existente ingrese otra opcion!', 
+						})
+						
+
+					}	if(data.status ==1){
+
+						$("#exampleModal3").modal('hide');  
+						$('body').removeClass('modal-open');
+						$(".modal-backdrop").remove();
+						document.getElementById("Edtslide").reset();
+						$('#slide').DataTable().ajax.reload(null, false);
+						Swal.fire({
+							icon: 'success',
+							confirmButtonColor:'rgb(3, 169, 244)',
+							text: 'Slide agregado con exito!', 
+						})
+
+					}
+					if(data.status ==0)
+						console.log('error');
+				}
+
+         });//fin de la peticion ajax
+
+		}	
+		
+	});
+
+	/*----------------------------------------------------------------------------------- */
+
+
+
+
+
+
+	/*----------------------------- Metodo para eliminar Slide ------------------------ */
 	$(document).on('click','#deleteSlideBtn',function(e){
 
 		var id = $(this).data('id');
-
 		e.preventDefault();
+
 		swal.fire({
 			icon:'question',
 			title:'Estas Seguro?',
@@ -269,8 +354,6 @@
 		}).then((result) =>{
 			/*si ela respuesta es positiva*/
 			if(result.value){
-				
-				
           // entonces hacemos una peticion ajax
           $.ajax({
 
@@ -285,47 +368,26 @@
           				icon: 'success',
           				confirmButtonColor: 'rgb(3, 169, 244)',
           				title: 'Borrado exitoso',
-          				text: 'La categoría se elimino de forma exitosa!', 
+          				text: 'Slide borrado de forma exitosa!', 
           			})          		}else{
           				console.log('error');
           			}
           		}
 
          });//fin de la peticion ajax
-
-
       }
 
   });
 
+	});
+
+	/*--------------------------------------------------------------------------------- */
+	
 
 
-/*metodo de edicion de slide*/
+	/*----------------------------- Validacion form  agregar Slide ------------------------ */
 
 
-
-	});/*termina el metodo de borrado */
-
-
-
-$(document).on('click','#editSlideBtn',function(){
-		
-		var id_slide = $(this).data('id');
-					//e.preventDefault();
-					
-					//console.log(id);
-			
-					$.post('<?= route("edit") ?>',{id:slide_id}, function(data){
-                         console.log(data.details.id);
-                         
-                       },'json');
-				});
-
-
-
-
-
-	/*validacion del formulario*/
 
 	let validate = $('#formSlide').validate({
 
@@ -345,9 +407,7 @@ $(document).on('click','#editSlideBtn',function(){
 
 				required:true,
 				extension: "jpg|jpeg|png"
-
-			},
-			
+			},	
 
 		},
 		highlight: function (element, errorClass, validClass) {
@@ -362,32 +422,97 @@ $(document).on('click','#editSlideBtn',function(){
 			title: {
 				required: "Campo requerido",
 				maxlength: "Máximo 50 caracteres"
-
 			},
 
 			description: {
 				required: "Campo requerido",
 				maxlength: "Máximo 200 caracteres"
-
 			},
 
 			image: {
 				required: "Campo requerido",
 				extension:"Por favor ingrese una extensión valida"
-
 			},
 
 		},
 
 	});
 
-	/*reseteo de modal*/
+
+
+	/*------------------------------------------------------------------------------------- */
+
+
+	
+
+	/*----------------------------- Validacion form  editar Slide ------------------------ */
+
+	let validate2 = $('#Edtslide').validate({
+
+		rules:{
+
+			title2:{
+				required:true,
+				maxlength: 50
+			},
+
+			description2:{
+				required:true,
+				maxlength: 200
+			}, 
+
+			image2: {
+
+				required:true,
+				extension: "jpg|jpeg|png"
+			},
+			
+		},
+		highlight: function (element, errorClass, validClass) {
+			$(element).addClass('is-invalid')
+
+		},
+		unhighlight: function (element, errorClass, validClass) {
+			$(element).removeClass('is-invalid')
+		},
+
+		messages:{
+			title2: {
+				required: "Campo requerido",
+				maxlength: "Máximo 50 caracteres"
+			},
+
+			description2: {
+				required: "Campo requerido",
+				maxlength: "Máximo 200 caracteres"
+			},
+
+			image2: {
+				required: "Campo requerido",
+				extension:"Por favor ingrese una extensión valida"
+			},
+
+		},
+
+	});
+
+	/*------------------------------------------------------------------------------------ */
+
+
+
+	/*----------------------------- Reseteo de modales al cerrarlos ------------------------ */
+
 	$('#exampleModal1').on('shown.bs.modal', function (event) {
 		validate.resetForm();
 		document.getElementById("formSlide").reset();
+	});
 
-	})
+	$('#exampleModal3').on('shown.bs.modal', function (event) {
+		validate2.resetForm();
 
+	});
+
+	/*------------------------------------------------------------- ------------------------ */
 </script>
 
 
