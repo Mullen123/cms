@@ -1,14 +1,4 @@
 
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.validate.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/additional-methods.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/popper.min.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/bootstrap-4.3.1.min.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/dataTables.bootstrap4.min.js"></script>
-
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/sweetalert2@11.js"></script>
-
-
 <script>
 	$( document ).ready(function() {
 		$.ajaxSetup({
@@ -16,48 +6,56 @@
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
 		});
- //metodo para mostrar usuarios
- $('#usuarios').DataTable({
- 	"processing": true,
- 	"serverSide": true,
- 	"ajax": {
- 		url: "{{ route('categorias.home') }}"
- 	},
- 	"columns": [
- 	{data:'id'},
- 	{data:'name'},
- 	{
- 		data: 'action', 
- 		name: 'action', 
- 		orderable: true, 
- 		searchable: true
- 	},
- 	],    language: {
- 		"decimal": "",
- 		"emptyTable": "No hay información",
- 		"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
- 		"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
- 		"infoFiltered": "(Filtrado de _MAX_ total entradas)",
- 		"infoPostFix": "",
- 		"thousands": ",",
- 		"lengthMenu": "Mostrar _MENU_ Entradas",
- 		"loadingRecords": "Cargando...",
- 		"processing": "Procesando...",
- 		"search": "Buscar:",
- 		"zeroRecords": "Sin resultados encontrados",
- 		"paginate": {
- 			"first": "Primero",
- 			"last": "Ultimo",
- 			"next": "Siguiente",
- 			"previous": "Anterior"
- 		}
- 	},
- });
-});/*termina document ready*/
+		/*----------------------------------- Datatable ---------------------------------- */
+
+		$('#categories').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"responsive": true,
+			"ajax": {
+				url: "{{ route('categorias.home') }}"
+			},
+			"columns": [
+			{data:'id'},
+			{data:'name'},
+
+			{
+				data: 'action', 
+				name: 'action', 
+				orderable: true, 
+				searchable: true
+			},
+			],    language: {
+				"decimal": "",
+				"emptyTable": "No hay información",
+				"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+				"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+				"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+				"infoPostFix": "",
+				"thousands": ",",
+				"lengthMenu": "Mostrar _MENU_ Entradas",
+				"loadingRecords": "Cargando...",
+				"processing": "Procesando...",
+				"search": "Buscar:",
+				"zeroRecords": "Sin resultados encontrados",
+				"paginate": {
+					"first": "Primero",
+					"last": "Ultimo",
+					"next": "Siguiente",
+					"previous": "Anterior"
+				}
+			},
+		});
 
 
-	/*agrregar categoria*/
-	$(document).on('click','#btnAddUser', function(e){
+		/*---------------------------------------------------------------------------------*/
+
+	});/*termina document ready*/
+
+
+	/*--------------------------------Agregar Categoria---------------------------------*/
+
+	$(document).on('click','#btnAddCategory', function(e){
 		e.preventDefault();
 
 		//console.log('le diste');
@@ -91,7 +89,7 @@
               document.getElementById("formCategorias").reset();
               //recargas el datatable
               //$('#usuarios').DataTable().ajax.reload(null, false);
-              $('#usuarios').DataTable().ajax.reload(null, false);
+              $('#categories').DataTable().ajax.reload(null, false);
                 //muestras la alerta de registro exitoso
                 Swal.fire({
                 	icon: 'success',
@@ -107,10 +105,13 @@
      });
 
 
+	/*---------------------------------------------------------------------------------*/
 
-	
-	/*metodo para eliminar categorias*/
-	$(document).on('click','#deleteUserBtn', function(e){
+
+	/*-----------------------------Eliminar Catrgoria----------------------------------*/
+
+
+	$(document).on('click','#deleteCategoryBtn', function(e){
 		var id = $(this).data('id');
 		swal.fire({
 			icon:'question',
@@ -136,7 +137,7 @@
           	dataType:'json',
           	success: function(data){
           		if(data.code == 1){
-          			$('#usuarios').DataTable().ajax.reload(null, false);
+          			$('#categories').DataTable().ajax.reload(null, false);
           			Swal.fire({
           				icon: 'success',
           				confirmButtonColor: 'rgb(3, 169, 244)',
@@ -150,7 +151,15 @@
         }//fin del if donde se valida si el usuario presiona el boton de eliminar o cancelar
      });//finaliza la promesa
 	});
-	$(document).on('click','#editUserBtn',function(){
+
+
+	/*---------------------------------------------------------------------------------*/
+
+	
+	
+	/*-----------------------------Editar Categoria-------------------------------------*/
+
+	$(document).on('click','#editCategoryBtn',function(){
 		
 		var id = $(this).data('id');
 					//e.preventDefault();
@@ -164,6 +173,12 @@
                          $("#EditModal").modal('show');  
                        },'json');
 				});
+
+	/*---------------------------------------------------------------------------------*/
+
+	
+	/*----------------------Actualizar Categorias---------------------------------------*/
+
 	$('#formEditCategorias').on('submit', function(e){
 		e.preventDefault();
 		if(validate2.form()){
@@ -180,7 +195,7 @@
 						$("#EditModal").modal('hide');  
 						$('body').removeClass('modal-open');
 						$(".modal-backdrop").remove();
-						$('#usuarios').DataTable().ajax.reload(null, false);
+						$('#categories').DataTable().ajax.reload(null, false);
 						Swal.fire({
 							icon: 'success',
 							confirmButtonColor:'rgb(3, 169, 244)',
@@ -202,7 +217,12 @@
 			});
 		}
 	});
-	/*validacion del formulario*/
+
+
+	/*---------------------------------------------------------------------------------*/
+
+
+	/*----------------------Validacion formulario  add categorias-----------------------*/
 	let validate = $('#formCategorias').validate({
 		rules:{
 			name:{
@@ -223,6 +243,14 @@
 			}
 		},
 	});
+
+
+	/*---------------------------------------------------------------------------------*/
+
+
+
+	/*-----------------------Validacion formulario edit categorias--------------------*/
+
 	let validate2 = $('#formEditCategorias').validate({
 		rules:{
 			name2:{
@@ -243,10 +271,22 @@
 			}
 		},
 	});
-	/*reseteo de modal*/
+
+	/*---------------------------------------------------------------------------------*/
+
+
+	
+	/*---------------------------------reseteo de modal--------------------------------*/
+
 	$('#exampleModal').on('shown.bs.modal', function (event) {
 		validate.resetForm();
 		document.getElementById("formCategorias").reset();
 	})
+
+	/*---------------------------------------------------------------------------------*/
+
+
+
+
 </script>
 

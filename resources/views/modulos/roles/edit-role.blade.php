@@ -1,11 +1,6 @@
 @extends('App')
 
-
-
-
 @section('content')
-
-
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -46,7 +41,6 @@
               @method('put')
 
 
-
               <h5>Nombre:</h5>
               <input type="text" id="name" name="name" class="form-control" placeholder="Ingrese nombre del rol" value="{{$role->name}}"><br>
 
@@ -77,11 +71,7 @@
              </div>
              @endforeach
 
-
-
              <br><br>
-
-
            </form>
 
 

@@ -40,7 +40,32 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-	Route::resource('users',UsersController::class)->names('users');
+	//Route::resource('users',UsersController::class)->names('users');
+	/*rutas para el modulo Usuarios*/
+	Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+	Route::post('/users', [UsersController::class, 'store'])->name('users.store');   
+Route::post('/deleteUser',[UsersController::class,'destroy'])->name('users.delete');
+	
+Route::get('/users/{user}/edit',[UsersController::class,'edit'])->name('users.edit');
+
+
+Route::put('/user/{user}',[UsersController::class,'update'])->name('users.update');
+//ruta para editar excrusiones
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	Route::resource('roles',RoleController::class)->names('roles')->except('show');
 
 
@@ -63,6 +88,10 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/deleteCategory',[CategoriasController::class,'delete'])->middleware('can:categorias.delete')->name('categorias.delete');
 
 });
+
+
+
+
 
 
 

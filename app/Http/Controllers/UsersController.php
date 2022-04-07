@@ -1,117 +1,115 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-
+use Illuminate\Support\Facades\DB;
 
 /*traemos el modelo de roles*/
 use Spatie\Permission\Models\Role; 
-
+use App\Models\User;
+use DataTables;
+use Validator;
 
 
 class UsersController extends Controller
 {
 
 
-    public function __construct(){
-
-        $this->middleware('can:users.index')->only('index');
-        $this->middleware('can:users.edit')->only('edit');
-        $this->middleware('can:users.update')->only('update');
-
-
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
+     
+        $users = User::get();
 
-        $users = User::paginate(5);
-
-        return view('modulos.usuarios.home',compact('users'));
-
+        return view('modulos.usuarios.home-user',compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
+    
 
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
-    }
+       if($request->ajax()){
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    public function edit(User $user)
-    {
-
-        /*recuperamos el listado de roles*/
-        $roles = Role::all();
-
-        return  view('modulos.usuarios.editar-user',compact('user','roles'));
+           try {
 
 
-    }
+             $user = new User();
+             
+             $user->name= $request->name;
+             $user->email= $request->email;
+             $user->password= bcrypt($request->password);
+             
+             $resultado =DB::table('users')->where('email',$user->email)->exists(); 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,User $user)
-    {
-     /*el sync se encargara de ingresar registros en la tabla intermedia de usuario roles la cual se llama model_has_roles*/
-     $user->roles()->sync($request->roles);
+             if($resultado){
 
-     return redirect()->route('users.edit',$user)->with('info' , 'Rol Asignado correctamente');
+                return response()->json(['status'=>2,'error'=>'Existing user']);
 
- }
+            }else{
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+                $user->save();
+                return response()->json(['status'=>1,'success'=>'User saved successfully.']);
 
-    }
+            }
+        } catch (Exception $e) {
+
+           return response()->json(['status'=>0,'error'=>'Error']);
+
+       }
+
+   }
+}
+
+
+public function edit(User $user)
+{
+
+    /*recuperamos el listado de roles*/
+    $roles = Role::all();
+
+    return  view('modulos.usuarios.editar-user',compact('user','roles'));
+
+
+}
+
+
+public function update(Request $request,User $user)
+{
+   /*el sync se encargara de ingresar registros en la tabla intermedia de usuario roles la cual se llama model_has_roles*/
+   $user->roles()->sync($request->roles);
+
+   return redirect()->route('users.edit',$user)->with('info' , 'Rol Asignado correctamente');
+
+}
+
+
+public function destroy(Request $request)
+{
+
+
+    if($request->ajax()){
+      $user_id = $request->id;
+      
+      
+      try {
+
+
+         $query = User::find($user_id)->delete(); 
+
+         return response()->json(['code'=>1,'success'=>'Deleted successfully.']);
+
+     } catch (Exception $e) {
+      return response()->json(['code'=>0,'error'=>'No se pudo borrar el elemento.']);
+  }
+
+
+}
+
+}
+
+
+
+
 }

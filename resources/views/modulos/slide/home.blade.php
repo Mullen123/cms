@@ -1,14 +1,9 @@
 @extends('App')
-<link rel="stylesheet" type="text/css" href="{{asset('css/styles/bootstrap-4.3.1.min.css')}}">
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="{{asset('css/styles/dataTables.bootstrap4.min.css')}}">
+
 
 @section('css')
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+@include('modulos.modulos-css.css')
 
 @endsection
 
@@ -68,8 +63,6 @@
 										<th>Título</th>
 										<th>Descripción</th>
 										<th>Imagen</th>
-
-										
 										<th>Acciones</th>
 									</tr>
 								</thead>
@@ -104,20 +97,17 @@
 @section('scripts')
 
 
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery-3.5.0.js"></script>
 
-
-
+<script type="text/javascript" src="http://project-cms.test/js/complementos/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.validate.js"></script>
 <script type="text/javascript" src="http://project-cms.test/js/extensiones/additional-methods.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/popper.min.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/bootstrap-4.3.1.min.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="http://project-cms.test/js/extensiones/dataTables.bootstrap4.min.js"></script>
-
+<script type="text/javascript" src="http://project-cms.test/js/complementos/popper.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/responsive.bootstrap4.min.js"></script>
 <script type="text/javascript" src="http://project-cms.test/js/extensiones/sweetalert2@11.js"></script>
-
-
 <script type="text/javascript">
 
 	$( document ).ready(function() {
@@ -136,6 +126,7 @@
 		$('#slide').DataTable({
 			"processing": true,
 			"serverSide": true,
+			"responsive": true,
 			"ajax": {
 				url: "{{ route('slide.home') }}"
 			},
@@ -329,10 +320,9 @@
 
 
 
-
-
-
 	/*----------------------------- Metodo para eliminar Slide ------------------------ */
+
+	
 	$(document).on('click','#deleteSlideBtn',function(e){
 
 		var id = $(this).data('id');
@@ -385,7 +375,7 @@
 	
 
 
-	/*----------------------------- Validacion form  agregar Slide ------------------------ */
+	/*--------------------------- Validacion form  agregar Slide------------------------ */
 
 
 
@@ -500,7 +490,7 @@
 
 
 
-	/*----------------------------- Reseteo de modales al cerrarlos ------------------------ */
+	/*-------------------------Reseteo de modales al cerrarlos ------------------------ */
 
 	$('#exampleModal1').on('shown.bs.modal', function (event) {
 		validate.resetForm();

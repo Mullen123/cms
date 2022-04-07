@@ -3,9 +3,7 @@
 
 @section('css')
 
-
-@include('modulos.categorias.categories-css')
-
+@include('modulos.modulos-css.css')
 
 @endsection
 
@@ -36,36 +34,22 @@
 
 					<div class="card card-info">
 						<div class="card-header" >
-
-
-
-							<!--<button type="button"class="btn btn-light" id="exportcsv">
-								Csv
-							</button>
-							<button type="button" class="btn btn-light" >
-								Pdf
-							</button>-->
-
-							
 							<div class="card-tools">
-								
-
-
 								<button type="button" class="btn btn-light"  data-toggle="modal" data-target="#exampleModal">
 									Agregar
 								</button>
 							</div>
 
-							
-
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body">
-							<table id="usuarios" class="table table-striped table-bordered" style="width:100%">
+							<table id="categories" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
 								<thead>
 									<tr>
 										<th width="10px">ID</th>
 										<th>Nombre</th>
+										
+										
 										<th>Acciones</th>
 									</tr>
 								</thead>
@@ -88,9 +72,7 @@
 <!-- /.content-wrapper -->
 
 
-
-
-
+<!--modal Agregar y Editar-->
 @include('modulos.categorias.create-categories')
 
 @include('modulos.categorias.edit-categories')
@@ -98,6 +80,8 @@
 @endsection
 
 @section('scripts')
+
+@include('modulos.modulos-js.js')
 
 @include('modulos.categorias.categories-scripts')
 

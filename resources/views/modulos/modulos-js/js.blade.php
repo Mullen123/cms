@@ -1,0 +1,9 @@
+<script type="text/javascript" src="http://project-cms.test/js/complementos/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.validate.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/popper.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/complementos/responsive.bootstrap4.min.js"></script>
+<script type="text/javascript" src="http://project-cms.test/js/extensiones/sweetalert2@11.js"></script>

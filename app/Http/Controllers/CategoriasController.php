@@ -30,14 +30,14 @@ class CategoriasController extends   Controller
 
             /*obtencion de los datos que se quieren mostrar en la base de datos*/
 
-            $categorias =  Categorias::select('id','name')->get();
+            $categorias =  Categorias::select('id','name',)->get();
 
             return Datatables::of($categorias)
             ->addColumn('action', function($row){
               return '<div class="btn-group" >
-              <a type="button" class="btn-floating light-blue waves-effect waves-light" id="editUserBtn" data-id="'.$row['id'].'">
+              <a type="button" class="btn-floating light-blue waves-effect waves-light" id="editCategoryBtn" data-id="'.$row['id'].'">
               <i class="fas fa-pencil-alt" style="color:#00c851;"></i></a>&nbsp;&nbsp;
-              <a type="button" class="btn-floating light-blue waves-effect waves-light"  id="deleteUserBtn"  data-id="'.$row['id'].'"><i class="fa fa-trash" style="color:#ff3547;"></i></a>
+              <a type="button" class="btn-floating light-blue waves-effect waves-light"  id="deleteCategoryBtn"  data-id="'.$row['id'].'"><i class="fa fa-trash" style="color:#ff3547;"></i></a>
               </div>';
 
           })

@@ -9,8 +9,6 @@
 			</div>
 			<div class="modal-body">
 
-
-
 				<form action="{{ route('categorias.update') }}" method="post" id="formEditCategorias">
 					@csrf
 
@@ -23,7 +21,7 @@
 
 					<br><br>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>&nbsp;&nbsp;
-					<button  type="submit" class="btn btn-primary" id="EditUser" value="Crear"  style="background-color: rgb(3, 169, 244) !important">Editar</button>
+					<button  type="submit" class="btn btn-primary" id="EditCategory" value="Crear"  style="background-color: rgb(3, 169, 244) !important">Editar</button>
 
 				</form>
 
