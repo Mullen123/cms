@@ -7,6 +7,7 @@
 
 body{
 	overflow-x: hidden;
+	background:#F7FEFE !important;
 	font-family: "Ubuntu-Regular";
 }
 
@@ -153,7 +154,7 @@ footer#contactenos ol li a{
 }
 
 footer#contactenos #formulario{
-	background:rgba(0,50,100,1);
+	background: #C4FDFD;
 	padding:40px;
 }
 

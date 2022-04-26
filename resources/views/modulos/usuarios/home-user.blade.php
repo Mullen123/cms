@@ -8,8 +8,6 @@
 
 @section('content')
 
-
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -36,6 +34,8 @@
                     <div  class="card card-info">
                         <div  class="card-header" >
 
+                            
+                            <a  type = "button"  class="btn btn-light" href="{{route('usersCsv')}}" style="color:black"> Csv</a>
                             <div class="card-tools">
                                 <button type="button"  class="btn btn-light"  data-toggle="modal" data-target="#addusr">
                                   Agregar
@@ -102,10 +102,11 @@
 @section('scripts')
 
 
-
-
-
 @include('modulos.modulos-js.js')
+
+
+
+
 
 <script type="text/javascript">
   $(document).ready(function() {

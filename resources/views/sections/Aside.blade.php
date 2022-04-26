@@ -59,6 +59,7 @@
 
 
            <li class="nav-item">
+                @can('slide.index')
             <a href="{{route('slide.home')}}" class="nav-link">
               <i class="nav-icon fas fa-image"></i>
               <p>
@@ -66,6 +67,7 @@
               
               </p>
             </a>
+               @endcan
           </li>
            <li class="nav-item">
             @can('categorias.home')
@@ -80,7 +82,7 @@
             @endcan
           </li>
            <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{route('excursiones.index')}}" class="nav-link">
               <i class="nav-icon fas fa-bus"></i>
               <p>
                 Excursiones

@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Frontend;
 use Illuminate\Http\Request;
+use App\Models\Mensaje;
 
-use App\Models\Categorias;
-use App\Models\Slide;
-use App\Models\Excursion;
-
-class FrontendController extends Controller
+class MensajeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,15 +14,13 @@ class FrontendController extends Controller
      */
     public function index()
     {
-
         
-          $slides = Slide::all();
 
-        $categorias = Categorias::all();
-         $excursiones = Excursion::all();
-    
-        return view('front-end.home',compact('categorias','slides','excursiones'));
-    }
+            $messages= Mensaje::all();
+
+        return $messages;
+
+            }
 
     /**
      * Show the form for creating a new resource.
@@ -46,16 +40,30 @@ class FrontendController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+         
+         
+   $msn = new Mensaje();
+             
+             $msn->name= $request->name;
+             $msn->email= $request->email;
+             $msn->message = $request->message;
+
+        $msn->save();
+
+          return response()->json(['details'=>$msn],200);
+      
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Frontend  $frontend
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Frontend $frontend)
+    public function show($id)
     {
         //
     }
@@ -63,10 +71,10 @@ class FrontendController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Frontend  $frontend
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Frontend $frontend)
+    public function edit($id)
     {
         //
     }
@@ -75,10 +83,10 @@ class FrontendController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Frontend  $frontend
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Frontend $frontend)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -86,10 +94,10 @@ class FrontendController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Frontend  $frontend
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Frontend $frontend)
+    public function destroy($id)
     {
         //
     }

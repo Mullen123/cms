@@ -5,6 +5,7 @@
 
 @include('modulos.modulos-css.css')
 
+
 @endsection
 
 @section('content')
@@ -83,6 +84,6 @@
 
 @include('modulos.modulos-js.js')
 
-@include('modulos.categorias.categories-scripts')
+@include('modulos.categorias.categories-functions')
 
 @endsection

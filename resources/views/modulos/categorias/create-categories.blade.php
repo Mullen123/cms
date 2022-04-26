@@ -10,8 +10,9 @@
       <div class="modal-body">
        <form id="formCategorias">
         
+
         <h5>Nombre:</h5>
-        <input type="text" id="name" name="name" class="form-control has-error">
+        <input type="text" id="name" name="name" class="form-control" placeholder="Ingresa una Categoría"  >
         <span class="error"></span>
         <br><br>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>&nbsp;&nbsp;

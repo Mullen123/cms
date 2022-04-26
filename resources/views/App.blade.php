@@ -11,6 +11,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
+  
   <link rel="stylesheet" href="http://project-cms.test/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -28,7 +29,7 @@
   <link rel="stylesheet" href="http://project-cms.test/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="http://project-cms.test/plugins/summernote/summernote-bs4.min.css">
- <!-- -->
+ <!--estilos propios-->
  <link rel="stylesheet" type="text/css" href="{{asset('css/styles.css')}}">
  
  @yield('css')
@@ -89,7 +90,7 @@
   
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="http://project-cms.test/dist/js/pages/dashboard.js"></script>
- <script type="text/javascript" src="http://project-cms.test/js/extensiones/jquery.validate.js"></script>
+ <script type="text/javascript" src="http://project-cms.test/js/complementos/jquery.validate.js"></script>
 
 
   @yield('scripts')

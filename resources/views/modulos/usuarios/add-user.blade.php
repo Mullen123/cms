@@ -14,21 +14,21 @@
 
 
          <h5>Nombre:</h5>
-         <input type="text" id ="name" name="name" class="form-control">
+         <input type="text" id ="name" name="name" class="form-control" placeholder="Ingresa nombre">
              <span class="error"></span>
 
          <h5>Email:</h5>
-         <input type="text"  id = "email" name="email" class="form-control ">
+         <input type="text"  id = "email" name="email" class="form-control" placeholder="Ingresa E-mail">
           <span class="error"></span>
 
 
          <h5>Contraseña:</h5>
-         <input type="password"  id =  "password"  name="password" class="form-control ">
+         <input type="password"  id =  "password"  name="password" class="form-control " placeholder="Ingresa password">
          <span class="error"></span>
 
 
          <h5>Confirmar contraseña:</h5>
-         <input type="password"  id = "password_confirmation"  name="password_confirmation" class="form-control">
+         <input type="password"  id = "password_confirmation"  name="password_confirmation" class="form-control" placeholder="Ingresa el mismo password">
          <br>
 
 

@@ -20,6 +20,8 @@ class UsersController extends Controller
     public function index(Request $request)
     {
      
+
+
         $users = User::get();
 
         return view('modulos.usuarios.home-user',compact('users'));

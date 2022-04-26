@@ -16,7 +16,7 @@
 
 					<h5>Nombre:</h5>
 
-					<input type="text" id="name2" name="name2" class="form-control has-error" placeholder="Ingrese la categoría">
+					<input type="text" id="name2" name="name2" class="form-control">
 					<span class="text-danger error-text name2_error"></span>
 
 					<br><br>

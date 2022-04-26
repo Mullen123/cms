@@ -7,6 +7,8 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SlideController;
+use App\Http\Controllers\ExcursionController;
+use App\Http\Controllers\ExportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,43 +41,24 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 
 
-
-	//Route::resource('users',UsersController::class)->names('users');
 	/*rutas para el modulo Usuarios*/
-	Route::get('/users', [UsersController::class, 'index'])->name('users.index');
-	Route::post('/users', [UsersController::class, 'store'])->name('users.store');   
-Route::post('/deleteUser',[UsersController::class,'destroy'])->name('users.delete');
+	Route::get('/users', [UsersController::class, 'index'])->middleware('can:users.index')->name('users.index');
+	Route::post('/users', [UsersController::class, 'store'])->middleware('can:users.store')->name('users.store');   
+    Route::post('/deleteUser',[UsersController::class,'destroy'])->middleware('can:users.delete')->name('users.delete');
+	Route::get('/users/{user}/edit',[UsersController::class,'edit'])->middleware('can:users.edit')->name('users.edit');
+	Route::put('/user/{user}',[UsersController::class,'update'])->middleware('can:users.update')->name('users.update');
+
 	
-Route::get('/users/{user}/edit',[UsersController::class,'edit'])->name('users.edit');
-
-
-Route::put('/user/{user}',[UsersController::class,'update'])->name('users.update');
-//ruta para editar excrusiones
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	Route::resource('roles',RoleController::class)->names('roles')->except('show');
 
 
 
 	/*rutas para el modulo Slide*/
-	Route::get('/slide', [SlideController::class, 'index'])->name('slide.home');
-	Route::post('/slide', [SlideController::class, 'store'])->name('slide.store');   
-	Route::post('/editSlide',[SlideController::class,'edit'])->name('edit');
-	Route::post('/updateSlide',[SlideController::class,'update'])->name('slide.update');
-	Route::post('/deleteSlide',[SlideController::class,'destroy'])->name('slide.delete');
+	Route::get('/slide', [SlideController::class, 'index'])->middleware('can:slide.index')->name('slide.home');
+	Route::post('/slide', [SlideController::class, 'store'])->middleware('can:slide.store')->name('slide.store');   
+	Route::post('/editSlide',[SlideController::class,'edit'])->middleware('can:slide.edit')->name('edit');
+	Route::post('/updateSlide',[SlideController::class,'update'])->middleware('can:slide.update')->name('slide.update');
+	Route::post('/deleteSlide',[SlideController::class,'destroy'])->middleware('can:slide.delete')->name('slide.delete');
 
 
 
@@ -87,7 +70,25 @@ Route::put('/user/{user}',[UsersController::class,'update'])->name('users.update
 	Route::post('/updateCategory', [CategoriasController::class, 'update'])->middleware('can:categorias.update')->name('categorias.update');
 	Route::post('/deleteCategory',[CategoriasController::class,'delete'])->middleware('can:categorias.delete')->name('categorias.delete');
 
+
+
+
+	/*rutas para las categorias*/
+	Route::get('/excursiones', [ExcursionController::class, 'index'])->name('excursiones.index');
+	Route::post('/excursiones', [ExcursionController::class, 'store'])->name('excursiones.store');
+	Route::post('/editExcursion', [ExcursionController::class, 'edit'])->name('excursiones.edit');
+	Route::post('/updateExcursion', [ExcursionController::class, 'update'])->name('excursiones.update');
+	Route::post('/deleteExcursion', [ExcursionController::class, 'destroy'])->name('excursiones.delete');
+
+
+
+
+/*rutas para exportar*/
+Route::get('users/export/', [ExportController::class, 'usersCsv'])->name('usersCsv');
+
+
 });
+
 
 
 

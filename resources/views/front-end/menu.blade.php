@@ -2,7 +2,7 @@
 
             <div id="logo" class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 
-                <img src="images/logotipo.png" class="img-responsive">
+                <img src="{{asset('img/icono.jpg')}}" class="img-responsive"  style= "max-width: 70% !important;">
 
             </div>
 
@@ -22,10 +22,10 @@
 
                 <ul class="nav navbar-nav">
 
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#top">Categorias</a></li>
-                    <li><a href="Excursiones-Todas">Excursiones</a></li>
-                    <li><a href="#contactenos">Contáctenos</a></li>
+                    <li><a  class="button-85" href="index.html" style="color: #fff !important; font-family: 'Brush Script MT', cursive; font-size: 30px !important">Inicio</a></li>
+                    <li><a class="button-85" href="#top" style="color: #fff !important; font-family: 'Brush Script MT', cursive; font-size: 25px;"  >Categorias</a></li>
+                    <li><a  class="button-85"href="" style="color: #fff !important; font-family: 'Brush Script MT', cursive ;font-size: 25px">Excursiones</a></li>
+                    <li><a class="button-85" href="#contactenos" style="color: #fff !important; font-family: 'Brush Script MT', cursive;font-size: 25px">Contáctenos</a></li>
 
                 </ul>
 
