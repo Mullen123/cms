@@ -15,7 +15,7 @@ class Mensaje extends Model
     //para que te inserte en la base de datos usando el modelo
     protected $fillable = [ 
 
-        'name','email','message',
+        'name','email','message','leido'
        
     ];
 

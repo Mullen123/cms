@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mensaje;
-
+use Illuminate\Support\Facades\DB;
+use DataTables;
 class MensajeController extends Controller
 {
     /**
@@ -12,13 +13,18 @@ class MensajeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         
 
-            $messages= Mensaje::all();
 
-        return $messages;
+   $mensajes =  Mensaje::select('id','name','email','message','created_at','leido')->get();
+
+
+      
+       
+    
+        return view('modulos.mensajes.mensajes',compact('mensajes'));
 
             }
 
@@ -49,8 +55,9 @@ class MensajeController extends Controller
              $msn->name= $request->name;
              $msn->email= $request->email;
              $msn->message = $request->message;
+             $msn->leido = 'No';
 
-        $msn->save();
+             $msn->save();
 
           return response()->json(['details'=>$msn],200);
       
@@ -65,7 +72,18 @@ class MensajeController extends Controller
      */
     public function show($id)
     {
-        //
+
+    
+  DB::table('mensajes')
+    ->where('id', $id)
+    ->update(['leido' => "Si"]);
+        $mensaje = Mensaje::find($id);
+        //dd($mensaje);
+            //$mensaje->leido = "Si";
+
+            //$mensaje->save();
+        
+        return view('modulos.mensajes.leer-mensaje',compact('mensaje'));
     }
 
     /**

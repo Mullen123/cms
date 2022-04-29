@@ -18,6 +18,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/mensajes', [MensajeController::class, 'index']);
 
 Route::post('/mensajes', [MensajeController::class, 'store']);

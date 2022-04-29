@@ -358,7 +358,7 @@
         rules:{
             name:{
                 required:true,
-                maxlength: 2
+                maxlength: 25
             },
 
         email:{
@@ -380,7 +380,7 @@
         messages:{
             name: {
                 required: "Campo requerido",
-                maxlength: "Máximo 2 carácteres"
+                maxlength: "Máximo 25 carácteres"
             },
               email:{
             required:"Campo requerido",

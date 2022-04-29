@@ -9,6 +9,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\ExcursionController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\MensajeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,10 +42,10 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/inicio', [InicioController::class, 'index'])->name('inicio');
 
 
-	/*rutas para el modulo Usuarios*/
+	/*---------------------------------- modulo Users ----------------------------------------*/
 	Route::get('/users', [UsersController::class, 'index'])->middleware('can:users.index')->name('users.index');
 	Route::post('/users', [UsersController::class, 'store'])->middleware('can:users.store')->name('users.store');   
-    Route::post('/deleteUser',[UsersController::class,'destroy'])->middleware('can:users.delete')->name('users.delete');
+	Route::post('/deleteUser',[UsersController::class,'destroy'])->middleware('can:users.delete')->name('users.delete');
 	Route::get('/users/{user}/edit',[UsersController::class,'edit'])->middleware('can:users.edit')->name('users.edit');
 	Route::put('/user/{user}',[UsersController::class,'update'])->middleware('can:users.update')->name('users.update');
 
@@ -52,8 +53,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::resource('roles',RoleController::class)->names('roles')->except('show');
 
 
-
-	/*rutas para el modulo Slide*/
+	/*---------------------------------- modulo Slide  -------------------------------------------*/
+	
 	Route::get('/slide', [SlideController::class, 'index'])->middleware('can:slide.index')->name('slide.home');
 	Route::post('/slide', [SlideController::class, 'store'])->middleware('can:slide.store')->name('slide.store');   
 	Route::post('/editSlide',[SlideController::class,'edit'])->middleware('can:slide.edit')->name('edit');
@@ -62,8 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-
-	/*rutas para las categorias*/
+	/*---------------------------------- modulo categorias  -------------------------------------------*/
 	Route::get('/categories', [CategoriasController::class, 'index'])->middleware('can:categorias.home')->name('categorias.home');
 	Route::post('/categories', [CategoriasController::class, 'store'])->middleware('can:categorias.store')->name('categorias.store');
 	Route::post('/editCategory', [CategoriasController::class, 'edit'])->middleware('can:categorias.edit')->name('categorias.edit');
@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-	/*rutas para las categorias*/
+	/*---------------------------------- modulo excursione  -----------------------------------------*/
 	Route::get('/excursiones', [ExcursionController::class, 'index'])->name('excursiones.index');
 	Route::post('/excursiones', [ExcursionController::class, 'store'])->name('excursiones.store');
 	Route::post('/editExcursion', [ExcursionController::class, 'edit'])->name('excursiones.edit');
@@ -82,10 +82,13 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
+	/*---------------------------------- export to csv  -------------------------------------------*/
+	Route::get('users/export/', [ExportController::class, 'usersCsv'])->name('usersCsv');
 
-/*rutas para exportar*/
-Route::get('users/export/', [ExportController::class, 'usersCsv'])->name('usersCsv');
 
+	/*------------------------------------ modulo mensajes  -----------------------------------------*/
+	Route::get('/mensajes', [MensajeController::class, 'index'])->name('mensajes.home');
+	Route::get('/leer-mensajes/{id}', [MensajeController::class, 'show'])->name('mensajes.show');
 
 });
 
