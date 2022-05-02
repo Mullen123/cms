@@ -70,6 +70,7 @@ public function edit(User $user)
 
     /*recuperamos el listado de roles*/
     $roles = Role::all();
+    //dd($roles);
 
     return  view('modulos.usuarios.editar-user',compact('user','roles'));
 

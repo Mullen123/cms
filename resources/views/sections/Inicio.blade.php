@@ -32,6 +32,13 @@
   <!-- /.card-header -->
   <div class="card-body">
     The body of the card
+
+
+  </div>
+
+
+
+
   </div>
   <!-- /.card-body -->
 

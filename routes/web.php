@@ -49,6 +49,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/users/{user}/edit',[UsersController::class,'edit'])->middleware('can:users.edit')->name('users.edit');
 	Route::put('/user/{user}',[UsersController::class,'update'])->middleware('can:users.update')->name('users.update');
 
+	//Route::put('/user/{user}',[UsersController::class,'update'])->middleware('can:users.update')->name('users.update');
+
 	
 	Route::resource('roles',RoleController::class)->names('roles')->except('show');
 
@@ -73,7 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-	/*---------------------------------- modulo excursione  -----------------------------------------*/
+	/*---------------------------------- modulo excursiones  -----------------------------------------*/
 	Route::get('/excursiones', [ExcursionController::class, 'index'])->name('excursiones.index');
 	Route::post('/excursiones', [ExcursionController::class, 'store'])->name('excursiones.store');
 	Route::post('/editExcursion', [ExcursionController::class, 'edit'])->name('excursiones.edit');

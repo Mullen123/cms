@@ -82,6 +82,7 @@
             @endcan
           </li>
            <li class="nav-item">
+             @can('excursiones.index')
             <a href="{{route('excursiones.index')}}" class="nav-link">
               <i class="nav-icon fas fa-bus"></i>
               <p>
@@ -89,8 +90,10 @@
               
               </p>
             </a>
+                 @endcan
           </li>
            <li class="nav-item">
+               @can('mensajes.home')
             <a href="{{route('mensajes.home')}}" class="nav-link">
               <i class="nav-icon fas fa-envelope"></i>
               <p>
@@ -98,6 +101,7 @@
               
               </p>
             </a>
+            @endcan
           </li>
            
     
